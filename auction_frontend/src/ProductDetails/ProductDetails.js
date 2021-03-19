@@ -62,11 +62,8 @@ const ProductDetails = () => {
                                 Place bid
                             </Button>
                             </InputGroup>
-                             <InputGroup className="mb-3">
-                                 <label htmlFor="autoBid">
-                                     Do you want to set auto-bid? Check here! 
-                                 </label>
-                               <Form.Check id="autoBid" type="checkbox" />
+                             <InputGroup className="mb-3">                                 
+                               <Form.Check id="autoBid" type="checkbox" label="Auto-bid" />
                             </InputGroup>
                         </form>
                         <h5>Description</h5>
