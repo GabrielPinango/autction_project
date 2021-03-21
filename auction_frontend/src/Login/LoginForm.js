@@ -44,13 +44,14 @@ const LoginForm = ({handleClose}) => {
         })
         .then((user) => {
             sessionStorage.setItem('user', JSON.stringify(user));
-            setUser({username: '',password: ''});
+            window.location = "/products"; 
         })
         .catch((error) => console.log(error))
     }
 
     return <>
     <Modal.Body>
+        <text>{isError ? 'An error has ocurred, check your credentials.' : ''}</text>
         <form>
             <InputGroup className="mb-3">
                 <FormControl

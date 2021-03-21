@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Show the profile for a given user.
+     * Function used to login dummy users
      *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @param Request $request
+     * @return void
      */
     public function login(Request $request)
     {
@@ -23,7 +23,7 @@ class UserController extends Controller
             case 'user2':
                 $user = [
                     'id' => 2,
-                    'username' => 'User2',
+                    'userName' => 'User2',
                     'firstName' => 'Dummy',
                     'lastName' => ' User #2',
                     'role' => 'Regular',
@@ -31,7 +31,7 @@ class UserController extends Controller
             default:
                 $user = [
                     'id' => 1,
-                    'username' => 'User1',
+                    'userName' => 'User1',
                     'firstName' => 'Dummy',
                     'lastName' => ' User #1',
                     'role' => 'Regular',

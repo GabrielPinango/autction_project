@@ -1,14 +1,17 @@
-import React from 'react';
-import Nav from '../Nav/Nav';
+import React, {useEffect} from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
 const Home = () => {
+  
+  useEffect(() => {
+     document.title = `Home Page`
+  }, [])
+
   return (
     <React.Fragment>
       <header>
-        <Nav />
         <section>
-          <h1 style={{textAlign: 'center'}}><a href="#" style={{textDecoration: 'none', color: '#000'}}>Auction Site</a></h1>
+          <h1 style={{textAlign: 'center'}}>Auction Site</h1>
         </section>
       </header>
       <section>
