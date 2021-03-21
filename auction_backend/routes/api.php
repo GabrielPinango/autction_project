@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('user/login', [UserController::class, 'login']);
 
 Route::get('products', function () {
-    return response()->json([
-        ['name' => 'Dummy Product #1'],
-        ['name' => 'Dummy Product #2'],
-        ['name' => 'Dummy Product #3'],
-        ['name' => 'Dummy Product #4'],
-        ['name' => 'Dummy Product #5'],
-    ], 200);
+    return response()->json(Product::all(), 200);
 });

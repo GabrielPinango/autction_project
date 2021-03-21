@@ -8,7 +8,7 @@ const NavSection = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const loginForm = <LoginForm />;
+    const loginForm = <LoginForm handleClose={handleClose} />;
     return <>
         <Navbar bg="light" expand="lg">
             <Navbar.Brand href="#home">Auction Site</Navbar.Brand>
@@ -29,7 +29,7 @@ const NavSection = () => {
             </Navbar.Collapse>
         </Navbar>
 
-        <ModalDialog show={show} handleClose={handleClose} formModal={loginForm}  />
+        <ModalDialog show={show} handleClose={handleClose} formModal={loginForm} title='Login'  />
     </>
 }
 

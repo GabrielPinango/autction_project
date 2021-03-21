@@ -26,7 +26,7 @@ const ProductListing = () => {
             }
         })
         .then((products) => {
-            setProducts([...products,products]);
+            setProducts(products);
             setisLoading(false);
         })
         .catch((error) => console.log(error))
@@ -66,16 +66,16 @@ const ProductListing = () => {
              <Container>
                 <section style={{display: 'grid',gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     { products.map((product) => {
-                        const {name} = product;
+                        const {title, description} = product;
                         return <Card style={{ width: '18rem', marginBottom: '1rem' }}>
                             <Card.Img variant="top" src="https://cdn.vox-cdn.com/thumbor/SJcmPEheS_cbdujd4zbIPTpuXfg=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/13315959/akrales_181019_3014_0770.jpg" />
                             <Card.Body>
                                 <Card.Title>
-                                    {name} <br/>
+                                    {title} <br/>
                                     <small className='text-secondary'>Starting Price: $50</small>
                                 </Card.Title>
                                 <Card.Text>
-                                    {productDescription.substring(0, 150) + '...'}
+                                    {description && description.substring(0, 150) + '...'}
                                 </Card.Text>
                                 <Button variant="primary">View details</Button>
                             </Card.Body>
