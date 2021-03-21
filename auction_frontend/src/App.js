@@ -1,12 +1,9 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import HomePage from './HomePage/HomePage';
-import ProductListing from './ProductListing/ProductListing';
-import ProductDetails from './ProductDetails/ProductDetails';
+import RouterSetup from './RouterSetup/RouterSetup';
 
 function App() {
   return (
-    <HomePage />
+    <RouterSetup />
   );
 }
 
