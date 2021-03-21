@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->timestamp('expiration_date');
-            $table->boolean('enabled');
+            $table->boolean('enabled')->default(1);
         });
     }
 
