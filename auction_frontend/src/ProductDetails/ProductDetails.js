@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import ErrorPage from '../ErrorPage/ErrorPage';
+import ErrorPage500 from '../ErrorPage/ErrorPage500';
 import { Link, useParams } from 'react-router-dom';
 import { fetchData } from '../Functions/fetchData';
 import { calculateTimeLeft } from '../Functions/calculateTimeLeft';
@@ -21,6 +21,7 @@ const ProductDetails = () => {
     const [expirationDate, setExpirationDate] = useState(new Date().toString());
     const { id } = useParams();
     const [isError, setIsError] = useState();
+    const [isLoading, setisLoading] = useState(true);
     const [product, setProduct] = useState([]);
     const [timeLeft, setTimeLeft] = useState(new Date());
 
@@ -30,6 +31,7 @@ const ProductDetails = () => {
             setProduct(product);
             const {expiration_date} = product;
             setExpirationDate(expiration_date);
+            setisLoading(false);
         })
         .catch((error) => setIsError(true));
     }, [id]);
@@ -44,8 +46,12 @@ const ProductDetails = () => {
         }
     });
     
-    if(isError) {
-        return <ErrorPage />
+    if(isLoading) {
+        return <div>
+        <h1>Loading...</h1>
+        </div>;
+    } else if(isError) {
+        return <ErrorPage500 />
     } else {
         const {title, description} = product;
         document.title = `Product`;
