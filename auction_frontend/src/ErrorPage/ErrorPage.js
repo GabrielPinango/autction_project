@@ -1,4 +1,5 @@
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import { Link } from 'react-router-dom';
 const ErrorPage = () => {
     return <>
         <Jumbotron>
@@ -7,7 +8,7 @@ const ErrorPage = () => {
                 The page you're trying to reach, doesn't exist.
             </p>
             <p>
-                <a href="/">Click here to go to home page</a>
+                <Link to='/' style={{textDecoration:'none',color:'#000'}}>Click here to go to home page</Link>
             </p>
         </Jumbotron>
     </>;

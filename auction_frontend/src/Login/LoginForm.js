@@ -3,7 +3,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-const url = 'http://127.0.0.1:8000/api/user/login';
+import { fetchData } from '../Functions/fetchData';
 
 const LoginForm = ({handleClose}) => {
     const [user, setUser] = useState({username: '',password: ''});
@@ -25,7 +25,7 @@ const LoginForm = ({handleClose}) => {
     };
 
     const userLogin = async(data) => {
-        fetch(url, {
+        let fetchedData = fetchData(`http://127.0.0.1:8000/api/user/login`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -34,19 +34,12 @@ const LoginForm = ({handleClose}) => {
             redirect: 'follow',
             referrerPolicy: 'no-referrer',
             body: JSON.stringify(data)
-        })
-        .then((resp) => {
-            if(resp.status >= 200 && resp.status <= 299) {
-                return resp.json();
-            } else {
-                setIsError(true);
-            }
-        })
-        .then((user) => {
+        });
+        fetchedData.then((user) => {
             sessionStorage.setItem('user', JSON.stringify(user));
             window.location = "/products"; 
         })
-        .catch((error) => console.log(error))
+        .catch((error) => setIsError(true))
     }
 
     return <>

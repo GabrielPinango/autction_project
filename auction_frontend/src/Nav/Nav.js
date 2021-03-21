@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import ModalDialog from '../ModalDialog/ModalDialog';
 import LoginForm from '../Login/LoginForm';
 import LoginNav from '../Login/LoginNav';
-import { useLocation } from 'react-router-dom'
+import { useLocation,Link } from 'react-router-dom';
 
 const NavSection = () => {
     const [show, setShow] = useState(false);
@@ -14,13 +14,20 @@ const NavSection = () => {
     const loginForm = <LoginForm handleClose={handleClose} />;
     return <>
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/">Auction Site</Navbar.Brand>
+            <Navbar.Brand>
+                <Link to='/' style={{textDecoration:'none',color:'#000'}}>Auction Site</Link>
+            </Navbar.Brand>
             <Navbar.Collapse>
                 <Nav activeKey={useLocation().pathname}>
-                    <Nav.Link eventKey="/" href="/">Home</Nav.Link>
+                    <Nav.Link eventKey="/">
+                        <Link to='/' style={{textDecoration:'none',color:'#000'}}>Auction Site</Link>
+                    </Nav.Link>
                     <Nav.Link eventKey="#">About us</Nav.Link>
                     <Nav.Link eventKey="#">Contact us</Nav.Link>
-                    {sessionStorage.getItem('user') != null ? <Nav.Link eventKey="/products"  href="/products">Products</Nav.Link> : ''}
+                    {(sessionStorage.getItem('user') != null ?
+                    <Nav.Link eventKey="/products" >
+                        <Link to='/products' style={{textDecoration:'none',color:'#000'}}>Products</Link>
+                    </Nav.Link> : '')}
                 </Nav>
             </Navbar.Collapse>
             {loginNav}

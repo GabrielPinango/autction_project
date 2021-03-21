@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Pagination from 'react-bootstrap/Pagination';
-const url = 'http://127.0.0.1:8000/api/products';
+import { fetchData } from '../Functions/fetchData';
 
 const ProductListing = () => {
     if(sessionStorage.getItem('user') == null) {
@@ -19,20 +19,12 @@ const ProductListing = () => {
 
     useEffect(() => {
         document.title = `Products`;
-        
-        fetch(url)
-        .then((resp) => {
-            if(resp.status >= 200 && resp.status <= 299) {
-                return resp.json();
-            } else {
-                setIsError(true);
-            }
-        })
-        .then((products) => {
+        let data = fetchData(`http://127.0.0.1:8000/api/products`);
+        data.then((products) => {
             setProducts(products);
             setisLoading(false);
         })
-        .catch((error) => console.log(error))
+        .catch((error) => setIsError(true))
     }, [])
 
     if(isLoading) {

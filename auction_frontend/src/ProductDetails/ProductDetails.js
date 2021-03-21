@@ -10,6 +10,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import { Link, useParams } from 'react-router-dom';
+import { fetchData } from '../Functions/fetchData';
+import { calculateTimeLeft } from '../Functions/calculateTimeLeft';
 
 const ProductDetails = () => {
     if(sessionStorage.getItem('user') == null) {
@@ -17,73 +19,50 @@ const ProductDetails = () => {
     }
 
     const [expirationDate, setExpirationDate] = useState(new Date().toString());
-
-    const calculateTimeLeft = () => {
-        let date = new Date(expirationDate);
-        const difference = date - new Date();
-        let timeLeft = {};
-        if (difference > 0) {
-            timeLeft = {
-                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                minutes: Math.floor((difference / 1000 / 60) % 60),
-                seconds: Math.floor((difference / 1000) % 60)
-            };
-        }
-        return timeLeft;
-    }
-
     const { id } = useParams();
     const [isError, setIsError] = useState();
     const [product, setProduct] = useState([]);
-    const url = `http://127.0.0.1:8000/api/product/${id}`;
     const [timeLeft, setTimeLeft] = useState(new Date());
 
     useEffect(() => {
-        fetch(url)
-        .then((resp) => {
-            if(resp.status >= 200 && resp.status <= 299) {
-                return resp.json();
-            } else {
-                setIsError(true);
-            }
-        })
-        .then((product) => {
+        let data = fetchData(`http://127.0.0.1:8000/api/product/${id}`);
+        data.then((product) => {
             setProduct(product);
             const {expiration_date} = product;
             setExpirationDate(expiration_date);
         })
-        .catch((error) => console.log(error))
-    }, []);
+        .catch((error) => setIsError(true));
+    }, [id]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setTimeLeft(calculateTimeLeft());
+            setTimeLeft(calculateTimeLeft(expirationDate));
         }, 1000);
 
         return () => {
             clearTimeout(timer)
         }
     });
-
-    const timerComponents = [];
-
-    Object.keys(timeLeft).forEach((interval) => {
-        if (!timeLeft[interval]) {
-            return;
-        }
-        timerComponents.push(
-        <span>
-            {timeLeft[interval]} {interval}{" "}
-        </span>
-        );
-    });
-
+    
     if(isError) {
         return <ErrorPage />
     } else {
         const {title, description} = product;
         document.title = `Product`;
+
+        const timerComponents = [];
+
+        Object.keys(timeLeft).forEach((interval) => {
+            if (!timeLeft[interval]) {
+                return;
+            }
+            timerComponents.push(
+            <span>
+                {timeLeft[interval]} {interval}{" "}
+            </span>
+            );
+        });
+
         return <>        
             <React.Fragment>
             <Breadcrumb>
