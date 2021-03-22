@@ -19,6 +19,7 @@ class Controller extends BaseController
             'firstname' => 'Dummy',
             'lastname' => ' User #1',
             'role' => 'Regular',
+            'wallet_funds' => 500,
         ],
         [
             'id' => 2,
@@ -27,6 +28,7 @@ class Controller extends BaseController
             'firstname' => 'Dummy',
             'lastname' => ' User #2',
             'role' => 'Regular',
+            'wallet_funds' => 900,
         ],
     ];
 }

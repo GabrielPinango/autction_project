@@ -23,6 +23,14 @@ class UserProductBidsController extends Controller
             ], 422);
         }
 
+        $availableFunds = $this->checkFunds($request->bid, $request->user_id);
+
+        if (!$availableFunds) {
+            return response()->json([
+                'message' => 'Not Enough funds',
+            ], 200);
+        }
+
         $userProductBid = new UserProductBids;
         $userProductBid->user_id = $request->user_id;
         $userProductBid->product_id = $request->product_id;
@@ -31,9 +39,7 @@ class UserProductBidsController extends Controller
 
         $httpCode = !$isSaved ? 500 : 200;
 
-        return response()->json([
-            $userProductBid,
-        ], $httpCode);
+        return response()->json($userProductBid, $httpCode);
     }
 
     public function getBidsByProduct(int $productId)
@@ -48,5 +54,22 @@ class UserProductBidsController extends Controller
         $httpCode = $bids->count() > 0 ? 200 : 204;
 
         return response()->json($bids, $httpCode);
+    }
+
+    private function checkFunds(int $bid, ?int $userId = null): bool
+    {
+        $user = array_filter($this->user, function ($data) use ($userId, $bid) {
+            return $userId === $data['id'] && $data['wallet_funds'] >= $bid;
+        });
+
+        if (!isset($user) || count($user) < 1) {
+            return false;
+        }
+
+        $user[0]['wallet_funds'] = $user[0]['wallet_funds'] - $bid;
+        $this->user = $user;
+        array_unique($this->user);
+
+        return true;
     }
 }
