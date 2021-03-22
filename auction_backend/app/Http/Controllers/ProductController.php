@@ -15,6 +15,28 @@ class ProductController extends Controller
      */
     public function getProduct(int $id)
     {
-        return response()->json(Product::findOrFail($id), 200);
+
+        $zip = new \ZipArchive();
+        $images = [];
+        if ($zip->open(public_path("/images/{$id}/{$id}.zip")) === true) {
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $file = $zip->statIndex($i);
+                $images[] = $file['name'];
+            }
+            $zip->close();
+        }
+
+        return response()->json([Product::findOrFail($id), 'imagesArr' => $images, 'images' => "download/$id"], 200);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function downloadZip(int $id)
+    {
+        return response()->download(public_path("/images/$id/$id.zip"));
     }
 }
