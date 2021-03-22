@@ -3,11 +3,13 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
+import Table from 'react-bootstrap/Table';
 import ErrorPage500 from '../ErrorPage/ErrorPage500';
 import { Link, useParams } from 'react-router-dom';
 import { fetchData } from '../Functions/fetchData';
@@ -26,6 +28,8 @@ const ProductDetails = () => {
     const [product, setProduct] = useState([]);
     const [images, setImages] = useState([]);
     const [bid, setBid] = useState(0);
+    const [bids, setBids] = useState([]);
+    const [noBids, setNoBids] = useState(false);
     const [timeLeft, setTimeLeft] = useState(new Date());
 
     useEffect(() => {
@@ -44,6 +48,17 @@ const ProductDetails = () => {
                     });
                 });
             }
+        })
+        .catch((error) => setIsError(true));
+    }, []);
+
+    useEffect(() => {
+        let data = fetchData(`http://127.0.0.1:8000/api/product/bids/${product_id}`);
+        data.then((response) => {
+            if(response === null || response.length < 1) {
+                setNoBids(true);
+            }
+            setBids(response);
         })
         .catch((error) => setIsError(true));
     }, []);
@@ -100,7 +115,14 @@ const ProductDetails = () => {
             });
 
             sync.then((response) => {
-                console.log(response);
+                if(response == null || response.length < 1) {
+                    return;
+                }
+                setBids((previusBids) => {
+                    previusBids.push(response[0]);
+                    return [...previusBids, previusBids];
+                });
+                setBid(0);
             })
             .catch((error) => setIsError(true))
         }
@@ -138,7 +160,7 @@ const ProductDetails = () => {
                                     <b>Starting bid:</b> $50
                                 </p>
                                 <p>
-                                    <b>Current bid:</b> $50
+                                    { !noBids && bids.length > 0 ? <span><b>Current bid:</b> {"$" + bids[0].bid}</span> : 'No bids placed' } 
                                 </p>
                                 <p>
                                     <b>Time left:</b> {timerComponents.length ? timerComponents : <span>Time's up!</span>}
@@ -169,6 +191,35 @@ const ProductDetails = () => {
                             </Col>
                         </Row>
                     </Container>
+                </section>
+                <br/>
+                <section>
+                    <Jumbotron fluid>
+                        <Container>
+                            <h2>Placed bids</h2>
+                            <hr/>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Placed at</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        bids.map((bid) => {
+                                            if(bid !== null && Object.keys(bid).length > 0 && bid.bid !== undefined) {
+                                                return <tr>
+                                                    <td>{ "$" + bid.bid }</td>
+                                                    <td>{bid.created_at}</td>
+                                                </tr>;
+                                            }
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        </Container>
+                    </Jumbotron>
                 </section>
             </React.Fragment>
         </>

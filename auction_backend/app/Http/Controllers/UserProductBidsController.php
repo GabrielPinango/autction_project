@@ -32,8 +32,21 @@ class UserProductBidsController extends Controller
         $httpCode = !$isSaved ? 500 : 200;
 
         return response()->json([
-            'message' => $userProductBid,
+            $userProductBid,
         ], $httpCode);
+    }
 
+    public function getBidsByProduct(int $productId)
+    {
+        if (null == $productId) {
+            return response()->json([
+                'message' => 'Invalid input.',
+            ], 422);
+        }
+
+        $bids = UserProductBids::where('product_id', $productId)->orderByDesc('bid')->get();
+        $httpCode = $bids->count() > 0 ? 200 : 204;
+
+        return response()->json($bids, $httpCode);
     }
 }

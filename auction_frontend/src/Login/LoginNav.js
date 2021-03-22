@@ -15,12 +15,12 @@ const LoginNav = ({handleShow}) => {
         </>
     } else {
         const loggedUser = JSON.parse(sessionStorage.getItem('user'));
-        const {firstName, lastName} = loggedUser;
+        const {firstname, lastname} = loggedUser;
         return <>
            <Navbar.Collapse className="justify-content-end">
                 <Nav activeKey="/home">
                     <Nav.Item  className="justify-content-end" >
-                        {firstName + ' ' + lastName} <br/>
+                        {firstname + ' ' + lastname} <br/>
                         <small>Logout</small>
                     </Nav.Item>
                 </Nav>

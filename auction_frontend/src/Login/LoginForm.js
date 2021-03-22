@@ -40,7 +40,8 @@ const LoginForm = ({handleClose}) => {
                 setIsError(true);
                 return;
             }
-            sessionStorage.setItem('user', JSON.stringify(user));
+            let userLogged = JSON.stringify(user[0]);
+            sessionStorage.setItem('user', JSON.stringify(user[0]));
             window.location = "/products";
         })
         .catch((error) => setIsError(true))
