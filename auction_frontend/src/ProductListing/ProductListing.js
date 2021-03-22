@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Pagination from 'react-bootstrap/Pagination';
 import { fetchData } from '../Functions/fetchData';
@@ -12,27 +12,35 @@ const ProductListing = () => {
         window.location = "/"; 
     }
 
-    let active = 2;
+    const { page } = useParams();
     let items = [];
     const [isLoading, setisLoading] = useState(true);
     const [isError, setIsError] = useState();
     const [products, setProducts] = useState([]);
+    const [nextPage, setNextPage] = useState('');
+    const [prevPage, setPrevPage] = useState('');
+    const [totalPages, setTotalPages] = useState('');
+    const [activePage, setActivePage] = useState('');
 
     useEffect(() => {
         document.title = `Products`;
-        let data = fetchData(`http://127.0.0.1:8000/api/products`);
+        let data = fetchData(`http://127.0.0.1:8000/api/products/` + page);
         data.then((products) => {
-            setProducts(products);
+            setProducts(products.data);
             setisLoading(false);
+            setNextPage(products.current_page + 1);
+            setTotalPages(products.last_page);
+            setActivePage(products.current_page);
+            setPrevPage(products.current_page - 1);
         })
         .catch((error) => setIsError(true))
     }, [])
 
     
 
-    for (let number = 1; number <= 5; number++) {
+    for (let number = 1; number <= totalPages; number++) {
         items.push(
-            <Pagination.Item href="#" key={number} active={number === active}>
+            <Pagination.Item href={`/products/${number}`} key={number} active={activePage === number}>
                 {number}
             </Pagination.Item>,
         );
@@ -57,7 +65,6 @@ const ProductListing = () => {
                         { products.map((product) => {
                             const {id, title, description} = product;
                             return <Card style={{ width: '18rem', marginBottom: '1rem' }} key={id}>
-                                <Card.Img variant="top" src="https://cdn.vox-cdn.com/thumbor/SJcmPEheS_cbdujd4zbIPTpuXfg=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/13315959/akrales_181019_3014_0770.jpg" />
                                 <Card.Body>
                                     <Card.Title>
                                         <Link to={`/product/${id}`} style={{textDecoration:'none'}}>{title}</Link> <br/>
@@ -74,9 +81,9 @@ const ProductListing = () => {
                     
                     <Pagination>
                         <Pagination.First />
-                        <Pagination.Prev />
+                        <Pagination.Prev href={prevPage > 0 ? '/products/' + prevPage : '/products/1'} />
                         {items}
-                        <Pagination.Next />
+                        <Pagination.Next href={'/products/' + nextPage} />
                         <Pagination.Last />
                     </Pagination>
                 </Container>

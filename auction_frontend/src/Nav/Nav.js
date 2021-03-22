@@ -25,8 +25,8 @@ const NavSection = () => {
                     <Nav.Link eventKey="#">About us</Nav.Link>
                     <Nav.Link eventKey="#">Contact us</Nav.Link>
                     {(sessionStorage.getItem('user') != null ?
-                    <Nav.Link eventKey="/products" >
-                        <Link to='/products' style={{textDecoration:'none',color:'#000'}}>Products</Link>
+                    <Nav.Link eventKey="/products/1" >
+                        <Link to='/products/1' style={{textDecoration:'none',color:'#000'}}>Products</Link>
                     </Nav.Link> : '')}
                 </Nav>
             </Navbar.Collapse>
