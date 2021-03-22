@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProductBidsController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,7 @@ Route::get('products', function () {
 Route::get('product/{id}', [ProductController::class, 'getProduct']);
 
 Route::get('download/{id}', [ProductController::class, 'downloadZip']);
+
+Route::put('bid/save', [UserProductBidsController::class, 'save']);
+
+Route::get('product/bids/{product_id}', [UserProductBidsController::class, 'getBidsByProduct']);
