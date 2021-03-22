@@ -98,6 +98,11 @@ const ProductDetails = () => {
         const placeBid = (e) => {
             e.preventDefault();
             const { id } = JSON.parse(sessionStorage.getItem('user'));
+            let user = JSON.parse(sessionStorage.getItem('user'));
+            if(user.wallet_funds < bid) {
+                alert('Not enough funds');
+                return;
+            }
             let data = {
                 user_id: id,
                 product_id: product_id,
@@ -123,8 +128,13 @@ const ProductDetails = () => {
                 if(response == null || response.length < 1) {
                     return;
                 }
+
+                let { wallet_funds } = JSON.parse(sessionStorage.getItem('user'));
+                user.wallet_funds = wallet_funds - bid;
+                sessionStorage.setItem('user', JSON.stringify(user));
+
                 setBids((previusBids) => {
-                    previusBids.push(response[0]);
+                    previusBids.push(response);
                     return [...previusBids, previusBids];
                 });
                 setBid(0);

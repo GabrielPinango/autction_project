@@ -39,9 +39,7 @@ class UserProductBidsController extends Controller
 
         $httpCode = !$isSaved ? 500 : 200;
 
-        return response()->json([
-            $isSaved,
-        ], $httpCode);
+        return response()->json($userProductBid, $httpCode);
     }
 
     public function getBidsByProduct(int $productId)
