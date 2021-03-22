@@ -21,8 +21,10 @@ const ProductDetails = () => {
         window.location = "/"; 
     }
 
+    let user = JSON.parse(sessionStorage.getItem('user'));
     const [expirationDate, setExpirationDate] = useState(new Date().toString());
     const { product_id } = useParams();
+    let isAutoBidSet = 'parameters' in user && product_id in user.parameters && 'set_auto_bid' in user.parameters[product_id]; 
     const [isError, setIsError] = useState();
     const [isLoading, setisLoading] = useState(true);
     const [product, setProduct] = useState([]);
@@ -31,6 +33,7 @@ const ProductDetails = () => {
     const [bids, setBids] = useState([]);
     const [noBids, setNoBids] = useState(false);
     const [timeLeft, setTimeLeft] = useState(new Date());
+    const [autoBid, setAutoBid] = useState(isAutoBidSet);
 
     useEffect(() => {
         let data = fetchData(`http://127.0.0.1:8000/api/product/${product_id}`);
@@ -98,7 +101,6 @@ const ProductDetails = () => {
         const placeBid = (e) => {
             e.preventDefault();
             const { id } = JSON.parse(sessionStorage.getItem('user'));
-            let user = JSON.parse(sessionStorage.getItem('user'));
             if(user.wallet_funds < bid) {
                 alert('Not enough funds');
                 return;
@@ -141,8 +143,31 @@ const ProductDetails = () => {
             })
             .catch((error) => setIsError(true))
         }
+
+        const autoBidHandle = (e) => {
+            let isChecked = e.target.checked;
+            const { id } = JSON.parse(sessionStorage.getItem('user'));
+            let sync = fetchData(`http://127.0.0.1:8000/api/product/settings/save`, {
+                method: 'PUT',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify({parameters: {set_auto_bid : isChecked}, product_id : product_id, user_id : id})
+            });
+            sync.then((response) => {
+                const params = JSON.parse(response.parameters);
+                setAutoBid(params.set_auto_bid)
+                user['parameters'] = {[response.product_id]: JSON.parse(response.parameters)};
+                sessionStorage.setItem('user', JSON.stringify(user));
+                user = JSON.parse(sessionStorage.getItem('user'));
+            })
+            .catch((error) => setIsError(true))
+        }
         
-        return <>        
+        return <>
             <React.Fragment>
                 <Breadcrumb>
                     <Breadcrumb.Item>
@@ -195,7 +220,13 @@ const ProductDetails = () => {
                                         </Button>
                                     </InputGroup>
                                     <InputGroup className="mb-3">                                 
-                                    <Form.Check id="autoBid" type="checkbox" label="Auto-bid" />
+                                    <Form.Check 
+                                        id="autoBid"
+                                        type="checkbox"
+                                        label="Auto-bid"
+                                        checked={ autoBid }
+                                        onClick={autoBidHandle}
+                                     />
                                     </InputGroup>
                                 </form>
                                 <h5>Description</h5>

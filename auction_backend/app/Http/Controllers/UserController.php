@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserProductsSettings;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -20,13 +21,24 @@ class UserController extends Controller
             return response()->json(['message' => 'Invalid Credentials.'], 401);
         }
 
+        $user = $this->user;
         $credentials = $request->only(['username', 'password']);
-        $this->user = array_filter($this->user, function ($data) use ($credentials) {
+        $user = array_filter($this->user, function ($data) use ($credentials) {
             return $credentials['username'] === $data['username'] && $credentials['password'] == $data['password'];
         });
 
-        $httpCode = count($this->user) > 0 ? 200 : 401;
-        return response()->json($this->user, $httpCode);
+        $currentUser = reset($user);
+        $userProductParams = $currentUser && count($currentUser) < 1 ? null :
+        UserProductsSettings::where(['user_id' => $currentUser['id']])->get();
+        $parameters = [];
+        if (null !== $userProductParams) {
+            foreach ($userProductParams as $params) {
+                $parameters[$params['product_id']] = json_decode($params['parameters']);
+            }
+            $currentUser['parameters'] = $parameters;
+        }
+        $httpCode = $currentUser && count($currentUser) > 0 ? 200 : 401;
+        return response()->json($currentUser, $httpCode);
     }
 
     private function isUserValid(array $user): bool
