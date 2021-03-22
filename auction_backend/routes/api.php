@@ -23,3 +23,5 @@ Route::get('products', function () {
 });
 
 Route::get('product/{id}', [ProductController::class, 'getProduct']);
+
+Route::get('download/{id}', [ProductController::class, 'downloadZip']);
