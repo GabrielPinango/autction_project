@@ -68,7 +68,6 @@ const ProductListing = () => {
                                 <Card.Body>
                                     <Card.Title>
                                         <Link to={`/product/${id}`} style={{textDecoration:'none'}}>{title}</Link> <br/>
-                                        <small className='text-secondary'>Starting Price: $50</small>
                                     </Card.Title>
                                     <Card.Text>
                                         {description && description.substring(0, 150) + '...'}
