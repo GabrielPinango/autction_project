@@ -60,7 +60,7 @@ const ProductDetails = () => {
             }
             setBids(response);
         })
-        .catch((error) => setIsError(true));
+        .catch((error) => { return; });
     }, []);
 
     useEffect(() => {
@@ -115,6 +115,11 @@ const ProductDetails = () => {
             });
 
             sync.then((response) => {
+                if('message' in response){
+                    alert(response.message);
+                    return;
+                }
+
                 if(response == null || response.length < 1) {
                     return;
                 }
