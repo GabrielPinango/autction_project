@@ -36,8 +36,12 @@ const LoginForm = ({handleClose}) => {
             body: JSON.stringify(data)
         });
         fetchedData.then((user) => {
+            if(null === user) {
+                setIsError(true);
+                return;
+            }
             sessionStorage.setItem('user', JSON.stringify(user));
-            window.location = "/products"; 
+            window.location = "/products";
         })
         .catch((error) => setIsError(true))
     }

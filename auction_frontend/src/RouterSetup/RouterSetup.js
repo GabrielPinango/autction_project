@@ -17,7 +17,7 @@ const RouterSetup = () => {
         <Route exact path='/products'>
           <ProductListing />
         </Route>
-        <Route exact path='/product/:id' children={<ProductDetails />}></Route>
+        <Route exact path='/product/:product_id' children={<ProductDetails />}></Route>
         <Route exact path='*'>
           <ErrorPage />
         </Route>

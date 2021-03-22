@@ -20,15 +20,16 @@ const ProductDetails = () => {
     }
 
     const [expirationDate, setExpirationDate] = useState(new Date().toString());
-    const { id } = useParams();
+    const { product_id } = useParams();
     const [isError, setIsError] = useState();
     const [isLoading, setisLoading] = useState(true);
     const [product, setProduct] = useState([]);
     const [images, setImages] = useState([]);
+    const [bid, setBid] = useState(0);
     const [timeLeft, setTimeLeft] = useState(new Date());
 
     useEffect(() => {
-        let data = fetchData(`http://127.0.0.1:8000/api/product/${id}`);
+        let data = fetchData(`http://127.0.0.1:8000/api/product/${product_id}`);
         data.then((product) => {
             setProduct(product[0]);
             const {expiration_date} = product[0];
@@ -57,12 +58,12 @@ const ProductDetails = () => {
         }
     });
 
-    if(isLoading) {
+    if(isError) {
+        return <ErrorPage500 />
+    } else if(isLoading) {
         return <div>
         <h1>Loading...</h1>
         </div>;
-    } else if(isError) {
-        return <ErrorPage500 />
     } else {
         const {title, description} = product;
         const timerComponents = [];
@@ -78,6 +79,31 @@ const ProductDetails = () => {
             </span>
             );
         });
+
+        const placeBid = (e) => {
+            e.preventDefault();
+            const { id } = JSON.parse(sessionStorage.getItem('user'));
+            let data = {
+                user_id: id,
+                product_id: product_id,
+                bid: bid
+            }
+            let sync = fetchData(`http://127.0.0.1:8000/api/bid/save`, {
+                method: 'PUT',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(data)
+            });
+
+            sync.then((response) => {
+                console.log(response);
+            })
+            .catch((error) => setIsError(true))
+        }
         
         return <>        
             <React.Fragment>
@@ -124,8 +150,10 @@ const ProductDetails = () => {
                                             aria-label="Place bid"
                                             aria-describedby="basic-addon2"
                                             type="number" step="0.01"
+                                            value={bid}
+                                            onChange={(e) => setBid(e.target.value)}
                                         />
-                                        <Button variant="primary" type="submit">
+                                        <Button variant="primary" onClick={placeBid}>
                                             Bid now!
                                         </Button>
                                     </InputGroup>

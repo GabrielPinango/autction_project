@@ -15,29 +15,23 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        if ($request->get('username') !== 'user1' && $request->get('username') !== 'user2') {
+        $isValid = $this->isUserValid($request->only(['username', 'password']));
+        if ($isValid) {
             return response()->json(['message' => 'Invalid Credentials.'], 401);
         }
 
-        switch ($request->get('username')) {
-            case 'user2':
-                $user = [
-                    'id' => 2,
-                    'userName' => 'User2',
-                    'firstName' => 'Dummy',
-                    'lastName' => ' User #2',
-                    'role' => 'Regular',
-                ];
-            default:
-                $user = [
-                    'id' => 1,
-                    'userName' => 'User1',
-                    'firstName' => 'Dummy',
-                    'lastName' => ' User #1',
-                    'role' => 'Regular',
-                ];
+        $credentials = $request->only(['username', 'password']);
+        $this->user = array_filter($this->user, function ($data) use ($credentials) {
+            return $credentials['username'] === $data['username'] && $credentials['password'] == $data['password'];
+        });
 
-        }
-        return response()->json($user, 200);
+        $httpCode = count($this->user) > 0 ? 200 : 401;
+        return response()->json($this->user, $httpCode);
+    }
+
+    private function isUserValid(array $user): bool
+    {
+        $isValidRequest = null === $user['username'];
+        return $isValidRequest;
     }
 }
