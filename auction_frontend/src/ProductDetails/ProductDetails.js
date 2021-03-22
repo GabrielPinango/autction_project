@@ -131,12 +131,11 @@ const ProductDetails = () => {
                     return;
                 }
 
-                let { wallet_funds } = JSON.parse(sessionStorage.getItem('user'));
-                user.wallet_funds = wallet_funds - bid;
+                user.wallet_funds = response.wallet.wallet_funds;
                 sessionStorage.setItem('user', JSON.stringify(user));
 
                 setBids((previusBids) => {
-                    previusBids.push(response);
+                    previusBids.push(response.maxBid);
                     return [...previusBids, previusBids];
                 });
                 setBid(0);
@@ -166,7 +165,7 @@ const ProductDetails = () => {
             })
             .catch((error) => setIsError(true))
         }
-        
+
         return <>
             <React.Fragment>
                 <Breadcrumb>
@@ -196,9 +195,6 @@ const ProductDetails = () => {
                             <Col className="col-sm-12 col-md-6">
                                 <h1>{title}</h1>
                                 <hr/>
-                                <p>
-                                    <b>Starting bid:</b> $50
-                                </p>
                                 <p>
                                     { !noBids && bids.length > 0 ? <span><b>Current bid:</b> {"$" + bids[0].bid}</span> : 'No bids placed' } 
                                 </p>

@@ -20,6 +20,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -27,6 +28,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -34,6 +36,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -41,6 +44,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -48,6 +52,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -55,6 +60,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -62,6 +68,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -69,6 +76,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -76,6 +84,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -83,6 +92,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -90,6 +100,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ], [
@@ -97,6 +108,7 @@ class ProductsSeeder extends Seeder
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. ',
+                'max_bid' => 1000,
                 'expiration_date' => DB::raw('DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 14 DAY)'),
                 'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             ],

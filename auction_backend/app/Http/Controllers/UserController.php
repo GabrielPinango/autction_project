@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserProductsSettings;
+use App\Models\UserWallet;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -30,6 +31,8 @@ class UserController extends Controller
         $currentUser = reset($user);
         $userProductParams = $currentUser && count($currentUser) < 1 ? null :
         UserProductsSettings::where(['user_id' => $currentUser['id']])->get();
+        $userWallet = UserWallet::where(['user_id' => $currentUser['id']])->first();
+        $currentUser["wallet_funds"] = $userWallet->wallet_funds;
         $parameters = [];
         if (null !== $userProductParams) {
             foreach ($userProductParams as $params) {
