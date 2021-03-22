@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class CreateUserWalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('user_wallets', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');;
+            $table->decimal('wallet_funds', 9, 3);
             $table->timestamps();
-            $table->string('title');
-            $table->text('description');
-            $table->timestamp('expiration_date');
-            $table->decimal('max_bid', 9, 3);
-            $table->boolean('enabled')->default(1);
         });
     }
 
@@ -31,6 +28,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('user_wallets');
     }
 }
