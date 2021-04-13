@@ -8,15 +8,10 @@
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9000,
-            "log": false,
-            "externalConsole": false,
-            "pathMappings": {
-                "/var/www/html": "${workspaceRoot}/"
-            }
+            "port": 9000
         },
         {
-            "name": "Launch currently open script",
+            "name": "Listen currently open script",
             "type": "php",
             "request": "launch",
             "program": "${file}",
